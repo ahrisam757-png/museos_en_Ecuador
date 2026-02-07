@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museos de Ecuador - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between">
+        <h1 class="text-2xl font-bold">Museos de Ecuador</h1>
+        <ul class="flex space-x-4">
+            <li><a href="index.html" class="hover:underline">Home</a></li>
+            <li><a href="mapa.html" class="hover:underline">Mapa</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-500 text-white p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Descubre los Museos de Ecuador</h2>
+        <p class="text-lg">Explora la rica historia y cultura ecuatoriana a través de sus museos. Incluyendo opciones locales en Imbabura.</p>
+    </section>
+
+    <!-- Carousel de Imágenes -->
+    <section class="p-8">
+        <h3 class="text-2xl font-bold mb-4 text-center">Galería de Museos</h3>
+        <div id="carousel" class="relative w-full max-w-4xl mx-auto overflow-hidden">
+            <div class="flex transition-transform duration-500" id="carousel-inner">
+                <!-- Imágenes: Reemplaza con tus URLs o paths -->
+                <img src="https://notyouraverageamerican.com/wp-content/uploads/2018/04/DSC_1548-1200x640.jpg" alt="Capilla del Hombre" class="w-full h-64 object-cover flex-shrink-0">
+                <img src="https://image.wmsm.co/64f8aeffe3421/museo-numismatico-del-ecuador-quito.webp" alt="Museo Numismático" class="w-full h-64 object-cover flex-shrink-0">
+                <img src="https://www.metropolitan-touring.com/wp-content/uploads/2022/09/museo-alabado.jpg" alt="Casa del Alabado" class="w-full h-64 object-cover flex-shrink-0">
+                <!-- Agrega más -->
+            </div>
+            <button id="prev" class="absolute left-0 top-1/2 bg-gray-800 text-white p-2 rounded-full">‹</button>
+            <button id="next" class="absolute right-0 top-1/2 bg-gray-800 text-white p-2 rounded-full">›</button>
+        </div>
+    </section>
+
+    <!-- Lista de Museos con Accordion -->
+    <section class="p-8 bg-white">
+        <h3 class="text-2xl font-bold mb-4">Lista de Museos</h3>
+        <div class="space-y-4">
+            <!-- Ejemplo de item -->
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">La Capilla del Hombre - Quito</button>
+                <div class="hidden mt-2">
+                    <p>Museo de arte iniciado por Oswaldo Guayasamín. Ubicación: Quito. Descripción: Enfocado en arte ecuatoriano moderno.</p>
+                </div>
+            </div>
+            <!-- Agrega más (ver lista abajo) -->
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Museo de la Ciudad - Quito</button>
+                <div class="hidden mt-2">
+                    <p>Historia de Quito desde épocas precolombinas. Ubicación: Centro histórico de Quito.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Casa del Alabado - Quito</button>
+                <div class="hidden mt-2">
+                    <p>Museo de arte precolombino. Ubicación: Quito.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Intiñan Museum - Cerca de Quito</button>
+                <div class="hidden mt-2">
+                    <p>Museo interactivo en la línea del Ecuador. Experimentos científicos y cultura indígena.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Museo Pumapungo - Cuenca</button>
+                <div class="hidden mt-2">
+                    <p>Etnográfico y arqueológico con arte y tsantsas (cabezas reducidas).</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Panama Hat Museum - Cuenca</button>
+                <div class="hidden mt-2">
+                    <p>Museo sobre sombreros de paja toquilla, ícono ecuatoriano.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">MAAC - Guayaquil</button>
+                <div class="hidden mt-2">
+                    <p>Museo de Antropología y Arte Contemporáneo.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Lovers of Sumpa Museum - Santa Elena</button>
+                <div class="hidden mt-2">
+                    <p>Arqueológico con esqueletos antiguos.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Complejo Cultural Fábrica Imbabura - Atuntaqui</button>
+                <div class="hidden mt-2">
+                    <p>Antigua fábrica textil convertida en centro cultural. Historia industrial de Imbabura.</p>
+                </div>
+            </div>
+            <div class="border rounded p-4">
+                <button class="w-full text-left font-bold text-xl" onclick="toggleAccordion(this)">Ibarra Museum and Cultural Centre - Ibarra</button>
+                <div class="hidden mt-2">
+                    <p>Centro cultural en Ibarra, con exposiciones locales. Cerca de ti en Imbabura.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
