@@ -24,36 +24,27 @@
         </ul>
     </nav>
 
-    <!-- Contenido principal -->
-    <section class="p-6 md:p-8 flex-grow flex flex-col">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center">Mapa Interactivo de Museos</h2>
+    <!-- Sección principal -->
+    <section class="p-6 md:p-8 flex-grow">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Mapa Interactivo de Museos</h2>
         
-        <!-- Mapa con altura fija pero generosa -->
-        <div id="map" class="flex-grow min-h-[500px] w-full border-2 border-gray-300 rounded-lg shadow-lg"></div>
+        <!-- El div del mapa con altura mínima fija para evitar bugs -->
+        <div id="map" class="w-full h-[600px] md:h-[700px] border-2 border-gray-300 rounded-lg shadow-lg"></div>
     </section>
 
     <script>
-        // Función para inicializar el mapa
-        function initMap() {
-            const mapElement = document.getElementById('map');
-            if (!mapElement) return;
+        document.addEventListener('DOMContentLoaded', function () {
+            // Crear el mapa
+            var map = L.map('map').setView([-1.8312, -78.1834], 6.5);
 
-            // Crear mapa
-            const map = L.map('map', {
-                zoomControl: true,
-                attributionControl: true
-            }).setView([-1.8312, -78.1834], 6.5);
-
-            // Capa base
+            // Añadir capa de OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                maxZoom: 19,
-                tileSize: 256,
-                zoomOffset: 0
+                maxZoom: 19
             }).addTo(map);
 
             // Museos
-            const museums = [
+            var museums = [
                 { name: 'La Capilla del Hombre', lat: -0.1915, lng: -78.4705, desc: 'Arte de Oswaldo Guayasamín - Quito' },
                 { name: 'Museo de la Ciudad', lat: -0.2208, lng: -78.5125, desc: 'Historia de Quito - Centro Histórico' },
                 { name: 'Casa del Alabado', lat: -0.2213, lng: -78.5158, desc: 'Arte precolombino - Quito' },
@@ -66,25 +57,23 @@
                 { name: 'Museo y Centro Cultural de Ibarra', lat: 0.3517, lng: -78.1223, desc: 'Cultura local - Ibarra, Imbabura' }
             ];
 
-            museums.forEach(m => {
+            museums.forEach(function(m) {
                 L.marker([m.lat, m.lng])
                     .addTo(map)
                     .bindPopup(`<b>${m.name}</b><br>${m.desc}`);
             });
 
-            // Forzamos varias actualizaciones del tamaño (muy efectivo contra bugs)
-            setTimeout(() => map.invalidateSize(), 100);
-            setTimeout(() => map.invalidateSize(), 300);
-            setTimeout(() => map.invalidateSize(), 600);
+            // Forzar actualización del mapa varias veces (soluciona el bug de renderizado parcial)
+            setTimeout(function() { map.invalidateSize(); }, 100);
+            setTimeout(function() { map.invalidateSize(); }, 300);
+            setTimeout(function() { map.invalidateSize(); }, 600);
+            setTimeout(function() { map.invalidateSize(); }, 1000);
 
-            // También actualizamos si la ventana cambia de tamaño
-            window.addEventListener('resize', () => {
-                setTimeout(() => map.invalidateSize(), 100);
+            // También actualiza si cambias el tamaño de la ventana
+            window.addEventListener('resize', function() {
+                map.invalidateSize();
             });
-        }
-
-        // Ejecutamos cuando todo esté listo
-        document.addEventListener('DOMContentLoaded', initMap);
+        });
     </script>
 </body>
 </html>
