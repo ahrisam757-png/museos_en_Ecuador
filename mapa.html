@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museos de Ecuador - Mapa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/leaflet/leaflet.css">
+    <script src="assets/leaflet/leaflet.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between">
+        <h1 class="text-2xl font-bold">Museos de Ecuador</h1>
+        <ul class="flex space-x-4">
+            <li><a href="index.html" class="hover:underline">Home</a></li>
+            <li><a href="mapa.html" class="hover:underline">Mapa</a></li>
+        </ul>
+    </nav>
+
+    <!-- Mapa Section -->
+    <section class="p-8">
+        <h2 class="text-3xl font-bold mb-4 text-center">Mapa Interactivo de Museos</h2>
+        <div id="map" class="h-96 w-full border rounded"></div>
+    </section>
+
+    <script>
+        // Inicializar mapa centrado en Ecuador
+        var map = L.map('map').setView([-1.5, -78.5], 6); // Centro aproximado de Ecuador
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        // Lista de museos con coords y desc (datos reales)
+        var museums = [
+            { name: 'La Capilla del Hombre', lat: -0.1915, lng: -78.4705, desc: 'Arte de Guayasamín.' },
+            { name: 'Museo de la Ciudad', lat: -0.223, lng: -78.512, desc: 'Historia de Quito.' }, // Aprox basado en centro histórico
+            { name: 'Casa del Alabado', lat: -0.2213, lng: -78.5158, desc: 'Arte precolombino.' },
+            { name: 'Intiñan Museum', lat: -0.0022, lng: -78.4558, desc: 'Línea del Ecuador.' },
+            { name: 'Museo Pumapungo', lat: -2.906, lng: -78.997, desc: 'Etnográfico en Cuenca.' },
+            { name: 'Panama Hat Museum', lat: -2.905, lng: -79.005, desc: 'Sombreros toquilla.' },
+            { name: 'MAAC', lat: -2.1856, lng: -79.8761, desc: 'Antropología y arte moderno.' },
+            { name: 'Lovers of Sumpa', lat: -2.2262, lng: -80.8587, desc: 'Arqueológico.' },
+            { name: 'Complejo Cultural Fábrica Imbabura', lat: 0.33, lng: -78.22, desc: 'Historia textil en Atuntaqui.' },
+            { name: 'Ibarra Museum', lat: 0.35, lng: -78.1167, desc: 'Cultural en Ibarra.' }
+        ];
+
+        // Agregar marcadores
+        museums.forEach(m => {
+            L.marker([m.lat, m.lng]).addTo(map)
+                .bindPopup(`<b>${m.name}</b><br>${m.desc}`);
+        });
+    </script>
+</body>
+</html>
