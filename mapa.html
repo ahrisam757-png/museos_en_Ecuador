@@ -14,9 +14,9 @@
     
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
-    <!-- Navbar fijo arriba -->
-    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md z-10">
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
         <h1 class="text-2xl font-bold">Museos de Ecuador</h1>
         <ul class="flex space-x-6">
             <li><a href="index.html" class="hover:underline">Home</a></li>
@@ -24,29 +24,26 @@
         </ul>
     </nav>
 
-    <!-- Contenedor principal que crece para llenar la pantalla -->
-    <main class="flex-grow flex flex-col">
-        <!-- Título (pequeño para no quitar mucho espacio) -->
-        <h2 class="text-2xl md:text-3xl font-bold text-center py-4 bg-white shadow-sm">
-            Mapa Interactivo de Museos
-        </h2>
-
-        <!-- Mapa que ocupa todo el espacio restante -->
-        <div id="map" class="flex-grow w-full"></div>
-    </main>
+    <!-- Sección del mapa -->
+    <section class="p-6 md:p-8 flex-grow">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center">Mapa Interactivo de Museos</h2>
+        
+        <!-- Mapa con altura 80vh -->
+        <div id="map" class="h-[80vh] w-full border-2 border-gray-300 rounded-lg shadow-lg"></div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Inicializamos el mapa
+            // Crear el mapa
             var map = L.map('map').setView([-1.8312, -78.1834], 6.5);
 
-            // Capa base de OpenStreetMap
+            // Capa de OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 19
             }).addTo(map);
 
-            // Museos
+            // Lista de museos
             var museums = [
                 { name: 'La Capilla del Hombre', lat: -0.1915, lng: -78.4705, desc: 'Arte de Oswaldo Guayasamín - Quito' },
                 { name: 'Museo de la Ciudad', lat: -0.2208, lng: -78.5125, desc: 'Historia de Quito - Centro Histórico' },
@@ -66,10 +63,10 @@
                     .bindPopup(`<b>${m.name}</b><br>${m.desc}`);
             });
 
-            // Pequeña corrección: forzamos que el mapa se actualice después de cargar
+            // Forzar actualización del tamaño del mapa después de cargar
             setTimeout(function() {
                 map.invalidateSize();
-            }, 300);
+            }, 200);
         });
     </script>
 </body>
