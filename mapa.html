@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Museos de Ecuador - Mapa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Leaflet desde CDN - siempre confiable -->
+
+    <!-- Leaflet CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5SXRr9lG0=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
 
-    <!-- Navbar simple -->
+    <style>
+        body { margin: 0; font-family: sans-serif; line-height: 1.6; background: #f9fafb; }
+        .map-container { height: 650px; width: 100%; border: 2px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
     <nav class="bg-blue-700 text-white p-4 shadow-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Museos de Ecuador</h1>
             <div class="space-x-6">
                 <a href="index.html" class="hover:underline">Home</a>
@@ -26,25 +31,22 @@
     </nav>
 
     <!-- Contenido -->
-    <div class="max-w-7xl mx-auto p-6">
+    <div class="max-w-6xl mx-auto p-6">
         <h2 class="text-3xl font-bold text-center mb-6">Mapa Interactivo de Museos</h2>
 
-        <!-- El mapa: altura fija para evitar bugs -->
-        <div id="map" style="height: 650px; width: 100%; border: 2px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);"></div>
+        <!-- Mapa -->
+        <div id="map" class="map-container"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Crear mapa
+        document.addEventListener('DOMContentLoaded', function () {
             var map = L.map('map').setView([-1.83, -78.18], 6.8);
 
-            // Capa de mapa base
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 maxZoom: 19
             }).addTo(map);
 
-            // Museos
             var museums = [
                 { name: 'La Capilla del Hombre', lat: -0.1915, lng: -78.4705, desc: 'Arte de Oswaldo Guayasamín - Quito' },
                 { name: 'Museo de la Ciudad', lat: -0.2208, lng: -78.5125, desc: 'Historia de Quito' },
@@ -58,16 +60,17 @@
                 { name: 'Museo de Ibarra', lat: 0.3517, lng: -78.1223, desc: 'Ibarra - Imbabura' }
             ];
 
-            museums.forEach(function(m) {
+            museums.forEach(m => {
                 L.marker([m.lat, m.lng])
                     .addTo(map)
-                    .bindPopup('<b>' + m.name + '</b><br>' + m.desc);
+                    .bindPopup(`<b>${m.name}</b><br>${m.desc}`);
             });
 
-            // Forzar actualización del mapa (muy importante)
-            setTimeout(function() { map.invalidateSize(); }, 200);
-            setTimeout(function() { map.invalidateSize(); }, 500);
-            setTimeout(function() { map.invalidateSize(); }, 1000);
+            // Forzar actualización del mapa (clave para evitar gris o zoom roto)
+            setTimeout(() => map.invalidateSize(), 100);
+            setTimeout(() => map.invalidateSize(), 400);
+            setTimeout(() => map.invalidateSize(), 800);
+            setTimeout(() => map.invalidateSize(), 1500);
         });
     </script>
 </body>
